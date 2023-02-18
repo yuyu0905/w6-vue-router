@@ -90,7 +90,7 @@
                 <div class="mb-3">
                     <label for="tel" class="form-label">收件人電話</label>
                     <v-field id="tel" name="電話" type="tel" class="form-control" :class="{ 'is-invalid': errors['電話'] }"
-                            placeholder="請輸入電話" v-model="form.user.tel" rules="required|min:8|max:10"></v-field>
+                            placeholder="請輸入電話" v-model="form.user.tel" :rules="isPhone"></v-field>
                     <error-message name="電話" class="invalid-feedback"></error-message>
                 </div>
 
@@ -211,6 +211,13 @@ export default {
         .catch(err => {
           alert(err.response.data.message)
         })
+    },
+
+    isPhone (value) {
+      const phoneNumber = /^(09)[0-9]{8}$/
+      return phoneNumber.test(value)
+        ? true
+        : '需要正確的電話號碼'
     }
   },
   mounted () {
